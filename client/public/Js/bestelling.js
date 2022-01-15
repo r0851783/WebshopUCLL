@@ -40,7 +40,7 @@ export default class Bestelling {
                 return response.json();
             })
             .then((bestelAntwoord) => {
-                console.log("bestelid: "+bestelAntwoord.bestelId);
+                // console.log("bestelid: "+bestelAntwoord.bestelId);
                 this._bestelId = bestelAntwoord.bestelId;
             })
             .catch((error) => {
