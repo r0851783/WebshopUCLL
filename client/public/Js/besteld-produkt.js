@@ -23,11 +23,13 @@ export default class BesteldProduct {
     }
 
     toHTMLString() {
+        console.log("bestelditem: ",this.produkt);
         return `
             <tr>
                 <td>${this._aantal}</td>
                 <td>${this.produkt}</td>
                 <td>${this._prijs}</td>
+                <td><a href="#" id="produkt-${this.produkt}" class="btn btn-secondary"> - </a></td>
             </tr>
         `;
     }

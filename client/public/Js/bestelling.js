@@ -1,5 +1,8 @@
 
 import BesteldProduct from "./besteld-produkt.js";
+        let totaalPrijs = 0;
+        let totaalArtikelen = 0;
+        const verzendKosten = 5.5;
 
 export default class Bestelling {
     constructor() {
@@ -48,6 +51,29 @@ export default class Bestelling {
             });
     }
 
+    verwijderProduct(produkt) {
+        let besteldProdukt = this._besteldeProdukten.filter((bp) => { //opzoek gaan naar elementen die aan die voorwaarde voldoen
+            return produkt._naam === bp.produkt;                      //true
+        });
+
+        if(besteldProdukt.length > 0)
+        {
+            if (besteldProdukt[0].aantal > 1) {
+                besteldProdukt[0].aantal--;
+                console.log("aantal verlaagd"); 
+            }
+            else{
+                for (let i = 0; i < this._besteldeProdukten.length; i++) {
+                    if(this._besteldeProdukten[i] === besteldProdukt[0])
+                    {
+                        console.log("Delete the item from array!")
+                        this._besteldeProdukten.splice(i,1);
+                    }       
+                }
+            }                            
+        } 
+    }
+
     toHTMLString() {
         let alleBesteldeProdukten = "";
         this._besteldeProdukten.forEach((besteldProdukt) => {
@@ -74,5 +100,29 @@ export default class Bestelling {
             alleBesteldeProdukten += `${besteldProdukt.toString()}\n`;
         });
         return alleBesteldeProdukten;
+    }
+
+    winkelwagen() {
+        totaalArtikelen = 0;
+        //bestelling winkelwagen
+        for (let i = 0; i < this._besteldeProdukten.length; i++) {
+            
+            totaalArtikelen += this._besteldeProdukten[i]._prijs * this._besteldeProdukten[i]._aantal;
+        }
+
+        console.log("€"+totaalArtikelen);
+        totaalPrijs = (totaalArtikelen + verzendKosten);
+    }
+
+    toWinkelwagenString()
+    {
+        let htmlString = `
+            <tr>
+                <td>€${totaalArtikelen}</td>
+                <td>€${verzendKosten}</td>
+                <td>€${totaalPrijs}</td>
+            </tr>
+        `;
+        return htmlString;
     }
 }
